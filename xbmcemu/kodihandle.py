@@ -47,3 +47,16 @@ class KodiHandle:
         if self.resolved_listitem != None:
             print(pre+"resolved list item:")
             self.resolved_listitem.pretty_print(pre+"\t")
+
+    def to_dict(self):
+        result = {"sub_content": []}
+        if self.resolved_listitem != None:
+            result["resolved_listitem"] = self.resolved_listitem.to_dict()
+        for sub_content in self.sub_content:
+            result["sub_content"].append({
+                "url": sub_content["url"],
+                "is_folder": sub_content["is_folder"],
+                "total_items": sub_content["total_items"],
+                "listitem": sub_content["listitem"].to_dict()
+            })
+        return result

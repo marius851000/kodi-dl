@@ -22,7 +22,7 @@ class ListItem:
 
     def setSubtitles(self, subtitles):
         self.subtitles = copy.copy(subtitles)
-        
+
     def pretty_print(self, pre=""):
         print(pre+"label: {}".format(self.label))
         if self.arts != {}:
@@ -36,3 +36,15 @@ class ListItem:
             print(pre+"path: {}".format(self.path))
         if self.subtitles != []:
             print(pre+"subtitles: {}".format(self.subtitles))
+
+    def to_dict(self):
+        result = {
+            "label": self.label,
+            "path": self.path,
+            "arts": self.arts,
+            "category": self.category,
+            "info": self.info,
+            "properties": self.properties,
+            "subtitles": self.subtitles,
+        }
+        return result
