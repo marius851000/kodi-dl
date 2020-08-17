@@ -10,3 +10,8 @@ def endOfDirectory(handle, succeeded = True, updateListing = False, cacheToDisc 
 
 def setResolvedUrl(handle, succeeded, listitem):
     xbmcemull.INSTANCE.get_handle(handle).set_resolved_url(succeeded, listitem)
+
+def addSortMethod(handle, sort_method):
+    xbmcemull.INSTANCE.get_handle(handle).add_sort_method(sort_method)
+
+SORT_METHOD_TRACKNUM = 7

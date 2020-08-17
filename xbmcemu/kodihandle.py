@@ -4,6 +4,7 @@ class KodiHandle:
         self.sub_content = []
         self.finished = False
         self.resolved_listitem = None
+        self.sort_methods = []
 
     def add_directory_item(self, url, listitem, is_folder, total_items):
         to_add = {
@@ -36,6 +37,9 @@ class KodiHandle:
             raise BaseException("setting a resolved url failed")
         self.resolved_listitem = listitem
 
+    def add_sort_method(self, sort_method):
+        self.sort_methods.append(sort_method)
+
     def pretty_print(self, pre=""):
         if self.sub_content != []:
             print(pre+"sub content:")
@@ -44,12 +48,16 @@ class KodiHandle:
                 print(pre+"\tlistitem:")
                 sub_content["listitem"].pretty_print(pre+"\t\t")
             print(pre+"folder finished: {}".format(self.finished))
+            print(pre+"sort methods: {}".format(self.sort_methods))
         if self.resolved_listitem != None:
             print(pre+"resolved list item:")
             self.resolved_listitem.pretty_print(pre+"\t")
 
     def to_dict(self):
-        result = {"sub_content": []}
+        result = {
+            "sub_content": [],
+            "sort_methods": self.sort_methods
+        }
         if self.resolved_listitem != None:
             result["resolved_listitem"] = self.resolved_listitem.to_dict()
         for sub_content in self.sub_content:
