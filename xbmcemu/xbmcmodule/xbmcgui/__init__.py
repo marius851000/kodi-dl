@@ -59,3 +59,7 @@ class ListItem:
             "subtitles": self.subtitles,
         }
         return result
+
+def getCurrentWindowId():
+    print("kodidl: placeholder: xbmcgui.getCurrentWindowId")
+    return 0
