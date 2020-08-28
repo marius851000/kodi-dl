@@ -34,7 +34,8 @@ class ListItem:
         self.subtitles = copy.copy(subtitles)
 
     def pretty_print(self, pre=""):
-        print(pre+"label: {}".format(self.label.encode("utf8")))
+        if self.label != None:
+            print(pre+"label: {}".format(self.label.encode("utf8")))
         if self.arts != {}:
             print(pre+"art: {}".format(self.arts))
         if self.category != None:
