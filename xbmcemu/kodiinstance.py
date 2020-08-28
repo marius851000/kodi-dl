@@ -67,3 +67,6 @@ class KodiInstance:
         folder = path.split("//")[1].split("/")[0]
         remaining = path.split("//")[1][len(folder)+1:]
         return os.path.join(self.real_path_map[folder], remaining)
+
+    def get_import_path_for_library(self, lib_name):
+        return self.get_real_path("special://home/addons/{}/lib".format(lib_name))

@@ -11,6 +11,7 @@ class KodiAddon:
         self.addon_id = id
         self.addon_folder = "special://home/addons/"+self.addon_id+"/"
         self.addon_metadata_xml_file = instance.join_path([self.addon_folder, "addon.xml"])
+        self.to_imports = []
 
         self.reload_addon_xml()
 
@@ -18,10 +19,15 @@ class KodiAddon:
         file = File(self.instance, self.addon_metadata_xml_file, "rb")
         root = etree.fromstring(file.read())
         file.close()
+
         for extension in root.findall("extension"):
             point = extension.get("point")
             if point == "xbmc.python.pluginsource":
                 self.entry_file_name = extension.get("library")
+
+        for requires in root.findall("requires"):
+            for import_statement in requires.findall("import"):
+                self.to_imports.append(import_statement.get("addon"))
 
     def execute(self, path):
         virtual_path = self.instance.join_path([self.addon_folder, self.entry_file_name])
@@ -31,6 +37,13 @@ class KodiAddon:
 
         #TODO: rewrite the full path based on declared dependancies
         new_path = copy.copy(sys.path)
+
+        for explicit_dependancies in self.to_imports:
+            if explicit_dependancies == "xbmc.python":
+                continue
+            path = self.instance.get_import_path_for_library(explicit_dependancies)
+            new_path.append(path)
+
         new_path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "xbmcmodule")))
         new_path.append(os.path.dirname(self.instance.get_real_path(virtual_path)))
 
