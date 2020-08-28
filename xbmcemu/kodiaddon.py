@@ -41,7 +41,7 @@ class KodiAddon:
             setting_root = etree.fromstring(file.read())
             file.close()
 
-            for setting in setting_root.findall("setting"):
+            for setting in setting_root.iter("setting"):
                 self.default_setings[setting.get("id")] = dict(setting.items())
 
     def execute(self, path):
