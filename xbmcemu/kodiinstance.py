@@ -29,9 +29,7 @@ class KodiInstance:
         url = url[9:]
         addon_id = url.split("/")[0]
         rest_url = url[len(addon_id):]
-        if rest_url[:2] != "/?":
-            raise BaseException("can't run an url that isn't under the form plugin://<plugin id>/?<query>")
-        rest_url = rest_url[2:]
+        rest_url = rest_url[1:]
         return self.run_addon(addon_id, rest_url)
 
     def obtain_handle(self):

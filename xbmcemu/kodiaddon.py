@@ -56,8 +56,8 @@ class KodiAddon:
         for explicit_dependancies in self.to_imports:
             if explicit_dependancies == "xbmc.python":
                 continue
-            path = self.instance.get_import_path_for_library(explicit_dependancies)
-            new_path.append(path)
+            addon_path = self.instance.get_import_path_for_library(explicit_dependancies)
+            new_path.append(addon_path)
 
         new_path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "xbmcmodule")))
         new_path.append(os.path.dirname(self.instance.get_real_path(virtual_path)))
@@ -70,7 +70,7 @@ class KodiAddon:
             "__name__": "__main__"
         }
         with patch.object(sys, "path", new_path):
-            with patch.object(sys, "argv", ["plugin://" + self.addon_id + "/", str(addon_handle), "?"+path]):
+            with patch.object(sys, "argv", ["plugin://" + self.addon_id + "/", str(addon_handle), path]):
                 import xbmcemull
                 with patch.object(xbmcemull, "INSTANCE", self.instance):
                     with patch.object(xbmcemull, "ADDON", self):
