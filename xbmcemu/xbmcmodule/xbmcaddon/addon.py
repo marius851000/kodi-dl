@@ -24,5 +24,7 @@ class Addon:
                 if self.addon.instance.file_exist(icon_path):
                     return icon_path
             return None
+        elif id == "profile":
+            return self.addon.instance.join_path(["special://profile/addon_data/", self.addon.addon_id])
         else:
             raise BaseException("kodidl: xbmcaddon.Addon.getAddonInfo: unknown id type : \"{}\"".format(id))

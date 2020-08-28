@@ -8,6 +8,7 @@ class KodiInstance:
         self.addons = {}
         self.real_path_map = {
             "userdata": os.path.join(self.kodi_path, "userdata"),
+            "profile": os.path.join(self.kodi_path, "userdata"),
             "home": self.kodi_path,
         }
 
