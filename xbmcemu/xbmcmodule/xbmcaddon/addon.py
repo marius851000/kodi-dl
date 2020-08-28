@@ -26,5 +26,7 @@ class Addon:
             return None
         elif id == "profile":
             return self.addon.instance.join_path(["special://profile/addon_data/", self.addon.addon_id])
+        elif id == "path":
+            return self.addon.addon_folder
         else:
             raise BaseException("kodidl: xbmcaddon.Addon.getAddonInfo: unknown id type : \"{}\"".format(id))
