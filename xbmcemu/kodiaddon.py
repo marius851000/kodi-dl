@@ -10,6 +10,7 @@ class KodiAddon:
         self.instance = instance
         self.addon_id = id
         self.name = None
+        self.version = None
         self.addon_folder = "special://home/addons/"+self.addon_id+"/"
         self.addon_metadata_xml_file = instance.join_path([self.addon_folder, "addon.xml"])
         self.to_imports = []
@@ -20,8 +21,9 @@ class KodiAddon:
         file = File(self.instance, self.addon_metadata_xml_file, "rb")
         root = etree.fromstring(file.read())
         file.close()
-        
+
         self.name = root.get("name")
+        self.version = root.get("version")
 
         for extension in root.findall("extension"):
             point = extension.get("point")
