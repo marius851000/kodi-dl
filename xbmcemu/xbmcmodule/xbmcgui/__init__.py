@@ -34,16 +34,16 @@ class ListItem:
         self.subtitles = copy.copy(subtitles)
 
     def pretty_print(self, pre=""):
-        print(pre+"label: {}".format(self.label))
+        print(pre+"label: {}".format(self.label.encode("utf8")))
         if self.arts != {}:
             print(pre+"art: {}".format(self.arts))
         if self.category != None:
-            print(pre+"category: {}".format(self.category))
+            print(pre+"category: {}".format(self.category.encode("utf8")))
             print(pre+"info: {}".format(self.info))
         if self.properties != {}:
             print(pre+"property: {}".format(self.properties))
         if self.path != None:
-            print(pre+"path: {}".format(self.path))
+            print(pre+"path: {}".format(self.path.encode("utf8")))
         if self.subtitles != []:
             print(pre+"subtitles: {}".format(self.subtitles))
 
