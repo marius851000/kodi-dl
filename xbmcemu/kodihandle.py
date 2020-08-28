@@ -5,6 +5,7 @@ class KodiHandle:
         self.finished = False
         self.resolved_listitem = None
         self.sort_methods = []
+        self.content = None
 
     def add_directory_item(self, url, listitem, is_folder, total_items):
         to_add = {
@@ -40,6 +41,9 @@ class KodiHandle:
     def add_sort_method(self, sort_method):
         self.sort_methods.append(sort_method)
 
+    def set_content(self, content):
+        self.content = content
+
     def pretty_print(self, pre=""):
         if self.sub_content != []:
             print(pre+"sub content:")
@@ -52,11 +56,14 @@ class KodiHandle:
         if self.resolved_listitem != None:
             print(pre+"resolved list item:")
             self.resolved_listitem.pretty_print(pre+"\t")
+        if self.content != None:
+            print(pre+"content: {}".format(self.content))
 
     def to_dict(self):
         result = {
             "sub_content": [],
-            "sort_methods": self.sort_methods
+            "sort_methods": self.sort_methods,
+            "content": self.content,
         }
         if self.resolved_listitem != None:
             result["resolved_listitem"] = self.resolved_listitem.to_dict()

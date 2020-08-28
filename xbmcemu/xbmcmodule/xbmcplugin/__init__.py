@@ -18,4 +18,7 @@ def setResolvedUrl(handle, succeeded, listitem):
 def addSortMethod(handle, sort_method):
     xbmcemull.INSTANCE.get_handle(handle).add_sort_method(sort_method)
 
+def setContent(handle, content):
+    xbmcemull.INSTANCE.get_handle(handle).set_content(content)
+    
 SORT_METHOD_TRACKNUM = 7
