@@ -17,7 +17,7 @@ class KodiInstance:
         addon = KodiAddon(self, addon_id)
         self.addons[addon_id] = addon
         return addon
-        
+
     def run_addon(self, addon_id, url):
         addon = self.get_addon(addon_id)
         return addon.execute(url)
@@ -75,6 +75,10 @@ class KodiInstance:
         folder = path.split("//")[1].split("/")[0]
         remaining = path.split("//")[1][len(folder)+1:]
         return os.path.join(self.real_path_map[folder], remaining)
+
+    def file_exist(self, path):
+        return os.path.isfile(self.get_real_path(path))
+
 
     def get_import_path_for_library(self, lib_name):
         return self.get_real_path("special://home/addons/{}/lib".format(lib_name))
