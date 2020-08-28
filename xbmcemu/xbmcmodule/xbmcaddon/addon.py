@@ -35,3 +35,6 @@ class Addon:
 
     def getSetting(self, id):
         return self.addon.get_setting(id)
+
+    def getLocalizedString(self, id):
+        return self.addon.get_translation(id)

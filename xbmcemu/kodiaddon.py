@@ -15,13 +15,17 @@ class KodiAddon:
         self.addon_metadata_xml_file = instance.join_path([self.addon_folder, "addon.xml"])
         self.to_imports = []
         self.default_setings = {}
+        self.translations = {}
 
         self.reload_addon_xml()
 
     def reload_addon_xml(self):
-        file = File(self.instance, self.addon_metadata_xml_file, "rb")
-        root = etree.fromstring(file.read())
-        file.close()
+        def open_xml(path):
+            file = File(self.instance, path, "rb")
+            root = etree.fromstring(file.read())
+            file.close()
+            return root
+        root = open_xml(self.addon_metadata_xml_file)
 
         self.name = root.get("name")
         self.version = root.get("version")
@@ -37,12 +41,16 @@ class KodiAddon:
 
         setting_path = self.instance.join_path([self.addon_folder, "resources/settings.xml"])
         if self.instance.file_exist(setting_path):
-            file = File(self.instance, setting_path, "rb")
-            setting_root = etree.fromstring(file.read())
-            file.close()
-
+            setting_root = open_xml(setting_path)
             for setting in setting_root.iter("setting"):
                 self.default_setings[setting.get("id")] = dict(setting.items())
+
+        translation_path = self.instance.join_path([self.addon_folder, "resources/language/English/strings.xml"])
+        if self.instance.file_exist(translation_path):
+            translation_root = open_xml(translation_path)
+            for string in translation_root.iter("string"):
+                self.translations[int(string.get("id"))] = string.text
+
 
     def execute(self, path):
         virtual_path = self.instance.join_path([self.addon_folder, self.entry_file_name])
@@ -81,3 +89,6 @@ class KodiAddon:
     def get_setting(self, key):
         print("kodidl: getting the setting {} without checking custom value".format(key))
         return str(self.default_setings[key]["default"])
+
+    def get_translation(self, key):
+        return self.translations[int(key)]
