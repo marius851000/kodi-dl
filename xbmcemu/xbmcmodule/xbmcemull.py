@@ -1,1 +1,2 @@
 INSTANCE = None
+ADDON = None

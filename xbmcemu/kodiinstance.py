@@ -5,13 +5,21 @@ class KodiInstance:
     def __init__(self, kodi_path):
         self.kodi_path = os.path.abspath(kodi_path)
         self.handles = {}
+        self.addons = {}
         self.real_path_map = {
             "userdata": os.path.join(self.kodi_path, "userdata"),
             "home": self.kodi_path,
         }
 
-    def run_addon(self, addon_id, url):
+    def get_addon(self, addon_id):
+        if addon_id in self.addons:
+            return self.addons[addon_id]
         addon = KodiAddon(self, addon_id)
+        self.addons[addon_id] = addon
+        return addon
+        
+    def run_addon(self, addon_id, url):
+        addon = self.get_addon(addon_id)
         return addon.execute(url)
 
     def run_url(self, url):

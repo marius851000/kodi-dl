@@ -58,6 +58,7 @@ class KodiAddon:
             with patch.object(sys, "argv", ["plugin://" + self.addon_id + "/", str(addon_handle), "?"+path]):
                 import xbmcemull
                 with patch.object(xbmcemull, "INSTANCE", self.instance):
-                    exec(file_binary, global_var, global_var)
+                    with patch.object(xbmcemull, "ADDON", self):
+                        exec(file_binary, global_var, global_var)
 
         return self.instance.free_handle(addon_handle)
