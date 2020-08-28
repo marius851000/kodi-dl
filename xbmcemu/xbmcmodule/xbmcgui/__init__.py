@@ -20,6 +20,16 @@ class ListItem:
     def setProperty(self, key, value):
         self.properties[key] = value
 
+    def setProperties(self, dictionary):
+        for key in dictionary:
+            self.setProperty(key, dictionary[key])
+
+    def setPath(self, path):
+        self.path = str(path)
+
+    def getLabel(self):
+        return self.label
+
     def setSubtitles(self, subtitles):
         self.subtitles = copy.copy(subtitles)
 
