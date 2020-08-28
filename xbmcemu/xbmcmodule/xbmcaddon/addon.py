@@ -18,5 +18,11 @@ class Addon:
                 if self.addon.instance.file_exist(icon_path):
                     return icon_path
             return None
+        elif id == "fanart":
+            for extension in file_extensions:
+                icon_path = self.addon.instance.join_path([self.addon.addon_folder, "fanart."+extension])
+                if self.addon.instance.file_exist(icon_path):
+                    return icon_path
+            return None
         else:
             raise BaseException("kodidl: xbmcaddon.Addon.getAddonInfo: unknown id type : \"{}\"".format(id))
