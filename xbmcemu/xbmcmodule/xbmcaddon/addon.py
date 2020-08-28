@@ -32,3 +32,6 @@ class Addon:
             return self.addon.version
         else:
             raise BaseException("kodidl: xbmcaddon.Addon.getAddonInfo: unknown id type : \"{}\"".format(id))
+
+    def getSetting(self, id):
+        return self.addon.get_setting(id)

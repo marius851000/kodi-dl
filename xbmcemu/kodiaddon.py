@@ -14,6 +14,7 @@ class KodiAddon:
         self.addon_folder = "special://home/addons/"+self.addon_id+"/"
         self.addon_metadata_xml_file = instance.join_path([self.addon_folder, "addon.xml"])
         self.to_imports = []
+        self.default_setings = {}
 
         self.reload_addon_xml()
 
@@ -33,6 +34,15 @@ class KodiAddon:
         for requires in root.findall("requires"):
             for import_statement in requires.findall("import"):
                 self.to_imports.append(import_statement.get("addon"))
+
+        setting_path = self.instance.join_path([self.addon_folder, "resources/settings.xml"])
+        if self.instance.file_exist(setting_path):
+            file = File(self.instance, setting_path, "rb")
+            setting_root = etree.fromstring(file.read())
+            file.close()
+
+            for setting in setting_root.findall("setting"):
+                self.default_setings[setting.get("id")] = dict(setting.items())
 
     def execute(self, path):
         virtual_path = self.instance.join_path([self.addon_folder, self.entry_file_name])
@@ -67,3 +77,7 @@ class KodiAddon:
                         exec(file_binary, global_var, global_var)
 
         return self.instance.free_handle(addon_handle)
+
+    def get_setting(self, key):
+        print("kodidl: getting the setting {} without checking custom value".format(key))
+        return str(self.default_setings[key]["default"])
