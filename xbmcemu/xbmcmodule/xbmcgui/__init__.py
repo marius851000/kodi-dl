@@ -26,7 +26,7 @@ class ListItem:
             self.setProperty(key, dictionary[key])
 
     def setPath(self, path):
-        self.path = str(path)
+        self.path = path
 
     def getLabel(self):
         return self.label
