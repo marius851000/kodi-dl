@@ -9,6 +9,7 @@ class ListItem:
         self.info = {}
         self.properties = {}
         self.subtitles = []
+        self.context_menu_item = []
 
     def setArt(self, values):
         self.arts = copy.copy(values)
@@ -33,6 +34,10 @@ class ListItem:
     def setSubtitles(self, subtitles):
         self.subtitles = copy.copy(subtitles)
 
+    def addContextMenuItems(self, items):
+        for item in items:
+            self.context_menu_item.append(item)
+
     def pretty_print(self, pre=""):
         if self.label != None:
             print(pre+"label: {}".format(self.label.encode("utf8")))
@@ -47,6 +52,8 @@ class ListItem:
             print(pre+"path: {}".format(self.path.encode("utf8")))
         if self.subtitles != []:
             print(pre+"subtitles: {}".format(self.subtitles))
+        if self.context_menu_item != []:
+            print(pre+"context menu items: {}".format(self.context_menu_item))
 
     def to_dict(self):
         result = {
@@ -57,6 +64,7 @@ class ListItem:
             "info": self.info,
             "properties": self.properties,
             "subtitles": self.subtitles,
+            "context_menu_item": self.context_menu_item
         }
         return result
 
