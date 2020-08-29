@@ -13,3 +13,10 @@ def translatePath(path):
 
 def log(msg, level=LOGDEBUG):
     print("kodidl: log (level {}): {}".format(level, msg))
+
+def getLanguage(format=2): #TODO: region
+    if format == 2:
+        print("kodidl:todo: plugin ask for language. returning english")
+        return "English"
+    else:
+        raise BaseException
