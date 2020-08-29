@@ -7,4 +7,11 @@ class Keyboard:
         self.hidden = hidden
 
     def doModal(self, autoclose=0):
-        xbmcemull.INSTANCE.get_user_keyboard_input(self)
+        self.text = xbmcemull.INSTANCE.get_user_keyboard_input(self)
+
+    def isConfirmed(self):
+        print("kodidl:todo: isConfirmed always return true")
+        return True
+
+    def getText(self):
+        return self.text
