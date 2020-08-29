@@ -1,8 +1,9 @@
 import copy
 
 class ListItem:
-    def __init__(self, label = None, path = None):
+    def __init__(self, label = None, path = None, label2 = None):
         self.label = label
+        self.label2 = label2
         self.path = path
         self.arts = {}
         self.category = None
@@ -41,6 +42,8 @@ class ListItem:
     def pretty_print(self, pre=""):
         if self.label != None:
             print(pre+"label: {}".format(self.label.encode("utf8")))
+        if self.label2 != None:
+            print(pre+"label2: {}".format(self.label2.encode("utf8")))
         if self.arts != {}:
             print(pre+"art: {}".format(self.arts))
         if self.category != None:
@@ -58,6 +61,7 @@ class ListItem:
     def to_dict(self):
         result = {
             "label": self.label,
+            "label2": self.label2,
             "path": self.path,
             "arts": self.arts,
             "category": self.category,
