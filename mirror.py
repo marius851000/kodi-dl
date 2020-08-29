@@ -60,7 +60,7 @@ def save_to_folder(kodi, dest_folder, url):
         get_listitem_data_to_download(to_download, to_save)
         print("saving :")
         to_save.pretty_print("\t")
-    
+
     for name in to_download:
         tmp_file = os.path.join(dest_folder, "tmp.tmp")
         url_to_download = to_download[name]

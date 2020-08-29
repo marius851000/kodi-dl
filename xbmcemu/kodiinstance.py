@@ -1,11 +1,13 @@
 import os
 from .kodiaddon import KodiAddon
+from .exception import KeyboardInputRequired
 
 class KodiInstance:
     def __init__(self, kodi_path):
         self.kodi_path = os.path.abspath(kodi_path)
         self.handles = {}
         self.addons = {}
+        self.planned_input = []
         self.real_path_map = {
             "userdata": os.path.join(self.kodi_path, "userdata"),
             "profile": os.path.join(self.kodi_path, "userdata"),
@@ -78,6 +80,11 @@ class KodiInstance:
     def file_exist(self, path):
         return os.path.isfile(self.get_real_path(path))
 
-
     def get_import_path_for_library(self, lib_name):
         return self.get_real_path("special://home/addons/{}/lib".format(lib_name))
+
+    def get_user_keyboard_input(self, keyboard):
+        if len(self.planned_input) > 0:
+            return self.planned_input.pop(0)
+        else:
+            raise KeyboardInputRequired(keyboard)

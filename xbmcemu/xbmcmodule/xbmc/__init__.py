@@ -1,5 +1,7 @@
 import xbmcemull
 
+from .keyboard import Keyboard
+
 LOGDEBUG = 0
 LOGINFO = 1
 LOGWARNING = 2
