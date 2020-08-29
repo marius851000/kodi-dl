@@ -45,11 +45,35 @@ class KodiAddon:
             for setting in setting_root.iter("setting"):
                 self.default_setings[setting.get("id")] = dict(setting.items())
 
-        translation_path = self.instance.join_path([self.addon_folder, "resources/language/English/strings.xml"])
-        if self.instance.file_exist(translation_path):
-            translation_root = open_xml(translation_path)
+        #TODO: allow to select the language
+        translation_path_xml = self.instance.join_path([self.addon_folder, "resources/language/English/strings.xml"])
+        if self.instance.file_exist(translation_path_xml):
+            translation_root = open_xml(translation_path_xml)
             for string in translation_root.iter("string"):
                 self.translations[int(string.get("id"))] = string.text
+
+        translation_path_po = self.instance.join_path([self.addon_folder, "resources/language/English/strings.po"])
+        if self.instance.file_exist(translation_path_po):
+            trans_po = File(self.instance, translation_path_po, "r")
+            msgctxt = None
+            msgid = None
+            msgstr = None
+            for line in trans_po.read().split("\n"):
+                first = line.split(" ")[0]
+                rest = line[len(first):]
+                if len(rest) >= 1:
+                    rest = rest[1:]
+                if first == "msgctxt":
+                    if msgctxt != None:
+                        self.translations[int(msgctxt)] = msgid
+                        msgctxt = None
+                    msgctxt = rest[2:-1]
+                elif first == "msgid":
+                    msgid = rest[1:-1]
+                elif first == "msgstr":
+                    msgstr = rest[1:-1]
+            if msgctxt != None:
+                self.translations[int(msgctxt)] = msgid
 
 
     def execute(self, path):
