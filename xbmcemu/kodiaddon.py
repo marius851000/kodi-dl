@@ -88,7 +88,17 @@ class KodiAddon:
 
     def get_setting(self, key):
         print("kodidl: getting the setting {} without checking custom value".format(key))
-        return str(self.default_setings[key]["default"])
+        if key in self.default_setings:
+            return str(self.default_setings[key]["default"])
+        else:
+            return None
+
+    def set_setting(self, key, value):
+        print("kodidl:warning: setting value without writing it to disk: {}".format(key))
+        if key in self.default_setings:
+            self.default_setings[key]["default"] = value
+        else:
+            self.default_setings[key] = {"default": value}
 
     def get_translation(self, key):
         return self.translations[int(key)]
