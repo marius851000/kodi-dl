@@ -1,5 +1,7 @@
 import copy
 
+import xbmcemull
+
 class ListItem:
     def __init__(self, label = None, path = None, label2 = None):
         self.label = label
@@ -41,18 +43,18 @@ class ListItem:
 
     def pretty_print(self, pre=""):
         if self.label != None:
-            print(pre+"label: {}".format(self.label.encode("utf8")))
+            print(pre+"label: {}".format(xbmcemull.to_str(self.label)))
         if self.label2 != None:
-            print(pre+"label2: {}".format(self.label2.encode("utf8")))
+            print(pre+"label2: {}".format(xbmcemull.to_str(self.label2)))
         if self.arts != {}:
             print(pre+"art: {}".format(self.arts))
         if self.category != None:
-            print(pre+"category: {}".format(self.category.encode("utf8")))
+            print(pre+"category: {}".format(xbmcemull.to_str(self.category)))
             print(pre+"info: {}".format(self.info))
         if self.properties != {}:
             print(pre+"property: {}".format(self.properties))
         if self.path != None:
-            print(pre+"path: {}".format(self.path.encode("utf8")))
+            print(pre+"path: {}".format(xbmcemull.to_str(self.path)))
         if self.subtitles != []:
             print(pre+"subtitles: {}".format(self.subtitles))
         if self.context_menu_item != []:
