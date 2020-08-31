@@ -1,6 +1,8 @@
 import xbmcemull
 
 from .keyboard import Keyboard
+from .monitor import Monitor
+from .player import Player
 
 LOGDEBUG = 0
 LOGINFO = 1
