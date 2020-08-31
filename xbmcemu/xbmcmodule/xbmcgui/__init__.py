@@ -2,6 +2,7 @@ import copy
 import xbmcemull
 
 from .dialog import Dialog
+from .window import Window
 
 class ListItem:
     def __init__(self, label = None, path = None, label2 = None):
