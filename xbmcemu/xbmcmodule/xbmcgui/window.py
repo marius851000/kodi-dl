@@ -5,13 +5,13 @@ class Window:
         self.window_id = existing_window_id
 
     def getProperty(self, property):
-        if property == "plugin.video.youtube-configs":
-            return None
-        else:
-            raise BaseException
+        print("kodidl:todo: unknown property in getProperty: {}, returning None".format(property))
+        return None
 
     def clearProperty(self, property):
-        if property == "plugin.video.youtube-configs":
-            pass
-        else:
-            raise BaseException
+        print("kodidl:todo: unknown property in clearProperty: {}, skipping".format(property))
+        pass
+
+    def setProperty(self, property, value):
+        print("kodidl:todo: setting {} to {}, doing nothing".format(property, value))
+        pass
