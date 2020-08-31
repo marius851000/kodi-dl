@@ -1,6 +1,7 @@
 import copy
-
 import xbmcemull
+
+from .dialog import Dialog
 
 class ListItem:
     def __init__(self, label = None, path = None, label2 = None):
