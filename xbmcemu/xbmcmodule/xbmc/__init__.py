@@ -7,6 +7,7 @@ LOGINFO = 1
 LOGWARNING = 2
 LOGERROR = 3
 LOGFATAL = 4
+LOGNONE = 5
 
 def translatePath(path):
     return xbmcemull.INSTANCE.get_real_path(path)
