@@ -43,7 +43,10 @@ class KodiAddon:
         if self.instance.file_exist(setting_path):
             setting_root = open_xml(setting_path)
             for setting in setting_root.iter("setting"):
-                self.default_setings[setting.get("id")] = dict(setting.items())
+                id = setting.get("id")
+                self.default_setings[id] = dict(setting.items())
+                if self.default_setings[id].get("default") == None:
+                    self.default_setings[id]["default"] = ""
 
         #TODO: allow to select the language
         translation_path_xml = self.instance.join_path([self.addon_folder, "resources/language/English/strings.xml"])
