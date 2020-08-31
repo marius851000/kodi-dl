@@ -1,9 +1,12 @@
 import xbmcemull
 
 class Addon:
-    def __init__(self):
-        self.addon_path = xbmcemull.ADDON.addon_id
-        self.addon = xbmcemull.INSTANCE.get_addon(self.addon_path)
+    def __init__(self, id = None):
+        if id == None:
+            self.addon_id = xbmcemull.ADDON.addon_id
+        else:
+            self.addon_id = id
+        self.addon = xbmcemull.INSTANCE.get_addon(self.addon_id)
 
     def getAddonInfo(self, id):
         file_extensions = [".png", ".jpg", ".jpeg", ".gif"]
