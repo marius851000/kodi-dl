@@ -38,6 +38,10 @@ class ListItem:
             self.setProperty(key, dictionary[key])
 
     def setPath(self, path):
+        splited_cookie = path.split("|Cookie=")
+        if len(splited_cookie) > 1:
+            path = splited_cookie[0]
+            print("kodidl: unused cookie for media: {}".format(splited_cookie[1]))
         self.path = path
 
     def getLabel(self):
