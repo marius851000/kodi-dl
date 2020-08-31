@@ -25,9 +25,10 @@ class ListItem:
     def setIconImage(self, path):
         self.arts["icon"] = path
 
-    def setInfo(self, category, values):
-        self.category = category
-        self.info = copy.copy(values)
+    def setInfo(self, type, infoLabels):
+        self.category = type
+        for key in infoLabels:
+            self.info[key] = infoLabels[key]
 
     def setProperty(self, key, value):
         self.properties[key] = value
