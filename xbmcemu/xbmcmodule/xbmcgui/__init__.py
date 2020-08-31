@@ -19,7 +19,11 @@ class ListItem:
         self.stream_info = {}
 
     def setArt(self, values):
-        self.arts = copy.copy(values)
+        for key in values:
+            self.arts[key] = values[key]
+
+    def setIconImage(self, path):
+        self.arts["icon"] = path
 
     def setInfo(self, category, values):
         self.category = category
