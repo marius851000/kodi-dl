@@ -13,6 +13,7 @@ class ListItem:
         self.properties = {}
         self.subtitles = []
         self.context_menu_item = []
+        self.x_avalaible_languages = [] #under the ietf code
 
     def setArt(self, values):
         self.arts = copy.copy(values)
@@ -41,6 +42,12 @@ class ListItem:
         for item in items:
             self.context_menu_item.append(item)
 
+    def x_addAvalaibleLanguages(self, languages):
+        self.x_avalaible_languages.extend(languages)
+
+    def x_addAvalaibleLangueg(self, language):
+        self.x_avalaible_languages.extend(language)
+
     def pretty_print(self, pre=""):
         if self.label != None:
             print(pre+"label: {}".format(xbmcemull.to_str(self.label)))
@@ -59,6 +66,8 @@ class ListItem:
             print(pre+"subtitles: {}".format(self.subtitles))
         if self.context_menu_item != []:
             print(pre+"context menu items: {}".format(self.context_menu_item))
+        if self.x_avalaible_languages != []:
+            print(pre+"avalaible languages: {}".format(self.x_avalaible_languages))
 
     def to_dict(self):
         result = {
@@ -70,7 +79,8 @@ class ListItem:
             "info": self.info,
             "properties": self.properties,
             "subtitles": self.subtitles,
-            "context_menu_item": self.context_menu_item
+            "context_menu_item": self.context_menu_item,
+            "x_avalaible_languages": self.x_avalaible_languages
         }
         return result
 
