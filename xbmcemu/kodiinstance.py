@@ -13,7 +13,7 @@ class KodiInstance:
             "profile": os.path.join(self.kodi_path, "userdata"),
             "home": self.kodi_path,
         }
-        
+
         self.additional_input =  {
             "language_order": ["en"]
         }
@@ -84,7 +84,11 @@ class KodiInstance:
         return os.path.join(self.real_path_map[folder], remaining)
 
     def file_exist(self, path):
-        return os.path.isfile(self.get_real_path(path))
+        real_path = self.get_real_path(path)
+        return os.path.isfile(real_path) or os.path.isdir(real_path)
+
+    def mkdir(self, path):
+        return os.mkdir(self.get_real_path(path))
 
     def get_import_path_for_library(self, lib_name):
         return self.get_real_path("special://home/addons/{}/lib".format(lib_name))
