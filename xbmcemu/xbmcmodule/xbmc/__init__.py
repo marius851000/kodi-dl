@@ -23,3 +23,7 @@ def getLanguage(format=2): #TODO: region
         return "English"
     else:
         raise BaseException
+
+
+def executebuiltin(command):
+    print("kodidl:todo: ignoring executeBuiltin {}".format(command))
