@@ -48,14 +48,23 @@ class KodiAddon:
                 if self.default_setings[id].get("default") == None:
                     self.default_setings[id]["default"] = ""
 
+        #HACK: how does kodi find this folder name
+
+        possible_language_folder = ["English", "resource.language.en_us"]
+        lang_folder = "none"
+
+        for lang_folder in possible_language_folder:
+            if self.instance.file_exist(self.instance.join_path([self.addon_folder, "resources/language/{}".format(lang_folder)])):
+                break
+
         #TODO: allow to select the language
-        translation_path_xml = self.instance.join_path([self.addon_folder, "resources/language/English/strings.xml"])
+        translation_path_xml = self.instance.join_path([self.addon_folder, "resources/language/{}/strings.xml".format(lang_folder)])
         if self.instance.file_exist(translation_path_xml):
             translation_root = open_xml(translation_path_xml)
             for string in translation_root.iter("string"):
                 self.translations[int(string.get("id"))] = string.text
 
-        translation_path_po = self.instance.join_path([self.addon_folder, "resources/language/English/strings.po"])
+        translation_path_po = self.instance.join_path([self.addon_folder, "resources/language/{}/strings.po".format(lang_folder)])
         if self.instance.file_exist(translation_path_po):
             trans_po = File(self.instance, translation_path_po, "r")
             msgctxt = None
