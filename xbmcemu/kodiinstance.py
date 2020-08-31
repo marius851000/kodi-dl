@@ -13,7 +13,10 @@ class KodiInstance:
             "profile": os.path.join(self.kodi_path, "userdata"),
             "home": self.kodi_path,
         }
-        self.additional_input =  {}
+        
+        self.additional_input =  {
+            "language_order": ["en"]
+        }
 
     def get_addon(self, addon_id):
         if addon_id in self.addons:

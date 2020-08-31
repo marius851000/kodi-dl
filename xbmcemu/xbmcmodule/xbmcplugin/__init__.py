@@ -23,4 +23,7 @@ def addSortMethod(handle, sort_method, label2mask=0):
 def setContent(handle, content):
     xbmcemull.INSTANCE.get_handle(handle).set_content(content)
 
+def x_getLanguageOrder():
+    return xbmcemull.INSTANCE.additional_input["language_order"]
+
 SORT_METHOD_TRACKNUM = 7
