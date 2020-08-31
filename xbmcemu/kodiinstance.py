@@ -77,6 +77,8 @@ class KodiInstance:
             raise "Invalid path: {}".format(path)
 
     def get_real_path(self, path):
+        if path[0] == "/":
+            return path
         folder = path.split("//")[1].split("/")[0]
         remaining = path.split("//")[1][len(folder)+1:]
         return os.path.join(self.real_path_map[folder], remaining)
