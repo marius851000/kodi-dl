@@ -123,6 +123,9 @@ class KodiAddon:
         return self.instance.free_handle(addon_handle)
 
     def get_setting(self, key):
+        #HACK: read overwrite value from some config file (Kodi's one ?)
+        if key == "kodion.setup_wizard":
+            return "false"
         print("kodidl: getting the setting {} without checking custom value".format(key))
         if key in self.default_setings:
             return str(self.default_setings[key]["default"])
