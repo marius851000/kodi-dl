@@ -38,23 +38,26 @@ def get_listitem_data_to_download(to_download, listitem):
 def get_subfolder_name(listitem):
     return listitem.label
 
-def save_to_folder(kodi, dest_folder, url, sub_content_from_parent=None):
+def save_to_folder(kodi, dest_folder, url, sub_content_from_parent=None, skip=[]):
     data_file = os.path.join(dest_folder, "data.json")
     if os.path.isfile(data_file):
         return
 
+    if url in skip:
+        return
+
     print("will save the folder {}".format(dest_folder))
+    print("downloading {}".format(url))
     if not os.path.isdir(dest_folder): #for py2
         os.makedirs(dest_folder)
 
     to_download = dict()
 
     result = kodi.run_url(url)
-    print(result)
     for sub_content in result.sub_content:
         sub_folder_name = quote_folder(get_subfolder_name(sub_content["listitem"]))
         get_listitem_data_to_download(to_download, sub_content["listitem"])
-        save_to_folder(kodi, os.path.join(dest_folder, "sf_" + sub_folder_name), sub_content["url"], sub_content)
+        save_to_folder(kodi, os.path.join(dest_folder, "sf_" + sub_folder_name), sub_content["url"], sub_content, skip)
 
     if result.resolved_listitem != None:
         to_save = result.resolved_listitem
@@ -104,5 +107,7 @@ if __name__ == "__main__":
     kodi = xbmcemu.KodiInstance("/home/marius/.kodi")
 
 #    save_to_folder(kodi, DATA_FOLDER, "plugin://plugin.video.needforponies/?")
-    save_to_folder(kodi, "/home/marius/kodi-dl/music-mlpfrance", "plugin://plugin.audio.mlpfrance/?")
+    save_to_folder(kodi, "/home/marius/kodi-dl/music-mlpfrance", "plugin://plugin.audio.mlpfrance/?", skip=[
+        "plugin://plugin.audio.mlpfrance/?action=list_bonus_videos&section_nb=7"
+    ])
     #TODO: rm -rf **/tmp.*.tmp
