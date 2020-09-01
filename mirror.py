@@ -38,7 +38,7 @@ def get_listitem_data_to_download(to_download, listitem):
 def get_subfolder_name(listitem):
     return listitem.label
 
-def save_to_folder(kodi, dest_folder, url):
+def save_to_folder(kodi, dest_folder, url, sub_content_from_parent=None):
     data_file = os.path.join(dest_folder, "data.json")
     if os.path.isfile(data_file):
         return
@@ -50,15 +50,17 @@ def save_to_folder(kodi, dest_folder, url):
     to_download = dict()
 
     result = kodi.run_url(url)
+    print(result)
     for sub_content in result.sub_content:
         sub_folder_name = quote_folder(get_subfolder_name(sub_content["listitem"]))
         get_listitem_data_to_download(to_download, sub_content["listitem"])
-        save_to_folder(kodi, os.path.join(dest_folder, "sf_" + sub_folder_name), sub_content["url"])
+        save_to_folder(kodi, os.path.join(dest_folder, "sf_" + sub_folder_name), sub_content["url"], sub_content)
 
     if result.resolved_listitem != None:
         to_save = result.resolved_listitem
+        if to_save.label == None:
+            to_save.label = sub_content_from_parent["listitem"].label
         get_listitem_data_to_download(to_download, to_save)
-        print("saving :")
         to_save.pretty_print("\t")
 
     for name in to_download:
@@ -98,8 +100,9 @@ def save_to_folder(kodi, dest_folder, url):
     f.close()
 
 if __name__ == "__main__":
-    DATA_FOLDER = "/home/marius/kodi-dl/mirror-test"
+ #   DATA_FOLDER = "/home/marius/kodi-dl/mirror-test"
     kodi = xbmcemu.KodiInstance("/home/marius/.kodi")
 
-    save_to_folder(kodi, DATA_FOLDER, "plugin://plugin.video.needforponies/?")
+#    save_to_folder(kodi, DATA_FOLDER, "plugin://plugin.video.needforponies/?")
+    save_to_folder(kodi, "/home/marius/kodi-dl/music-mlpfrance", "plugin://plugin.audio.mlpfrance/?")
     #TODO: rm -rf **/tmp.*.tmp
