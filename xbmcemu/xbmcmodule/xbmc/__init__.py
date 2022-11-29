@@ -28,8 +28,9 @@ def executebuiltin(command):
     print("kodidl:todo: ignoring executeBuiltin {}".format(command))
 
 def getInfoLabel(infotag):
-    if False:
-        pass
+    infotag_l = infotag.lower()
+    if infotag_l == "system.buildversion":
+        return "19.0"
     else:
         print("kodidl: unknown infotag for getInfoLabel: {}, retuning None instad".format(infotag))
         return None
