@@ -79,8 +79,13 @@ class KodiInstance:
     def get_real_path(self, path):
         if path[0] == "/":
             return path
-        folder = path.split("//")[1].split("/")[0]
-        remaining = path.split("//")[1][len(folder)+1:]
+        try:
+            folder = path.split("//")[1].split("/")[0]
+            remaining = path.split("//")[1][len(folder)+1:]
+        except Exception as e:
+            print(e)
+            print("can't decode the path {}, returning it as is.".format(path))
+            return path
         return os.path.join(self.real_path_map[folder], remaining)
 
     def file_exist(self, path):
