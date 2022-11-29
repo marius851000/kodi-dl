@@ -26,6 +26,9 @@ def setContent(handle, content):
 def x_getLanguageOrder():
     return xbmcemull.INSTANCE.additional_input["language_order"]
 
+def setPluginCategory(handle, unk1):
+    print("kodidl:todo: setPluginCategory called with {}".format(unk1))
+    
 SORT_METHOD_TRACKNUM = 7
 #TODO: find the true id
 SORT_METHOD_ALBUM = -1
