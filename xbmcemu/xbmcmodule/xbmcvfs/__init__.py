@@ -5,3 +5,6 @@ def exists(path):
 
 def mkdir(path):
     return xbmcemull.INSTANCE.mkdir(path)
+
+def translatePath(path):
+    return xbmcemull.INSTANCE.get_real_path(path)
