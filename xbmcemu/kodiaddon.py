@@ -50,7 +50,7 @@ class KodiAddon:
 
         #HACK: how does kodi find this folder name
 
-        possible_language_folder = ["English", "resource.language.en_us"]
+        possible_language_folder = ["English", "resource.language.en_us", "resource.language.en_gb"]
         lang_folder = "none"
 
         for lang_folder in possible_language_folder:
@@ -71,6 +71,10 @@ class KodiAddon:
             msgid = None
             msgstr = None
             for line in trans_po.read().split("\n"):
+                if line == "":
+                    continue
+                if line[-1] == "\r":
+                    line = line[0: -1]
                 first = line.split(" ")[0]
                 rest = line[len(first):]
                 if len(rest) >= 1:
