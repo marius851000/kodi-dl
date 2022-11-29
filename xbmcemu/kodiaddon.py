@@ -114,10 +114,9 @@ class KodiAddon:
             "__name__": "__main__"
         }
 
-        url_bottom = path.split("/")[-1]
-        url_top = path[:-len(url_bottom)]
+        #explanation of the argv: https://kodibeginner.com/using-arguments-adding-menu-kodi-add-ons/
         with patch.object(sys, "path", new_path):
-            with patch.object(sys, "argv", ["plugin://" + self.addon_id + "/"+url_top, str(addon_handle), url_bottom]):
+            with patch.object(sys, "argv", [ "plugin://" + self.addon_id + "/" , str(addon_handle), path]):
                 import xbmcemull
                 with patch.object(xbmcemull, "INSTANCE", self.instance):
                     with patch.object(xbmcemull, "ADDON", self):
