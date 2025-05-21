@@ -103,3 +103,8 @@ class KodiInstance:
             return self.planned_input.pop(0)
         else:
             raise KeyboardInputRequired(keyboard)
+
+    def is_ignored_addon(self, addon_id):
+        if addon_id == "xbmc.python":
+            return True
+        return False

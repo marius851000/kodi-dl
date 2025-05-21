@@ -5,6 +5,8 @@ import copy
 import os
 import sys
 from .kodihandle import KodiHandle
+from typing import List
+
 class KodiAddon:
     def __init__(self, instance, id):
         self.instance = instance
@@ -90,8 +92,20 @@ class KodiAddon:
                     msgstr = rest[1:-1]
             if msgctxt != None:
                 self.translations[int(msgctxt)] = msgid
+    
+    def get_direct_and_indirect_imports(self) -> List["KodiAddon"]:
+        addons = {}
+        for to_import in self.to_imports:
+            if not self.instance.is_ignored_addon(to_import):
+                addon = self.instance.get_addon(to_import)
+                addons[addon.addon_id] = addon
+                for indirect_addons in addon.get_direct_and_indirect_imports():
+                    addons[indirect_addons.addon_id] = indirect_addons
+        return list(addons.values())
 
-
+    def get_lib_folder(self) -> str:
+        return os.path.join(self.addon_folder, "lib")
+    
     def execute(self, path):
         virtual_path = self.instance.join_path([self.addon_folder, self.entry_file_name])
         file = File(self.instance, self.instance.join_path([self.addon_folder, self.entry_file_name]), "rb")
@@ -101,16 +115,13 @@ class KodiAddon:
         #TODO: rewrite the full path based on declared dependancies
         new_path = copy.copy(sys.path)
 
-        for explicit_dependancies in self.to_imports:
-            if explicit_dependancies == "xbmc.python":
-                continue
-            addon_path = self.instance.get_import_path_for_library(explicit_dependancies)
-            new_path.append(addon_path)
+        for addon in self.get_direct_and_indirect_imports():
+            new_path.append(self.instance.get_real_path(addon.get_lib_folder()))
 
         new_path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "xbmcmodule")))
         new_path.append(os.path.dirname(self.instance.get_real_path(virtual_path)))
 
-        addon_handle = self.instance.obtain_handle();
+        addon_handle = self.instance.obtain_handle()
 
         self.instance.handles[addon_handle] = KodiHandle(self)
 

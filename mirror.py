@@ -107,7 +107,9 @@ if __name__ == "__main__":
     kodi = xbmcemu.KodiInstance("/home/marius/.kodi")
 
 #    save_to_folder(kodi, DATA_FOLDER, "plugin://plugin.video.needforponies/?")
-    save_to_folder(kodi, "/home/marius/kodi-dl/music-mlpfrance", "plugin://plugin.audio.mlpfrance/?", skip=[
-        "plugin://plugin.audio.mlpfrance/?action=list_bonus_videos&section_nb=7"
-    ])
+#    save_to_folder(kodi, "/home/marius/kodi-dl/music-mlpfrance", "plugin://plugin.audio.mlpfrance/?", skip=[
+ #       "plugin://plugin.audio.mlpfrance/?action=list_bonus_videos&section_nb=7",
+#       "plugin://plugin.audio.mlpfrance/?action=list_albums&page=loe"
+#    ])
     #TODO: rm -rf **/tmp.*.tmp
+    save_to_folder(kodi, "/home/marius/kodi-dl/ponylife", "plugin://plugin.video.mlpfrance/?action=list_episodes&season=ponylife")
